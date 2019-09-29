@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.acosta.carros.domain.Carro;
+import com.acosta.carros.domain.dto.CarroDTO;
 import com.acosta.carros.service.CarroService;
 
 @RestController
@@ -26,8 +27,8 @@ public class CarroController {
 	private CarroService service;
 
 	@GetMapping()
-	public ResponseEntity<Iterable<Carro>> get() {
-		return new ResponseEntity<>(service.getCarros(), HttpStatus.OK);
+	public ResponseEntity get() {
+		return  ResponseEntity.ok(service.getCarros());
 
 	}
 
@@ -40,8 +41,8 @@ public class CarroController {
 	}
 
 	@GetMapping("/tipo/{tipo}")
-	public ResponseEntity getCarrosByTipo(@PathVariable("tipo") String tipo) {
-		List<Carro> carros = service.getCarroByTipo(tipo);
+	public ResponseEntity <List<CarroDTO>> getCarrosByTipo(@PathVariable("tipo") String tipo) {
+		List<CarroDTO> carros = service.getCarroByTipo(tipo);
 		
 		return carros.isEmpty() ?
 				ResponseEntity.noContent().build() :
