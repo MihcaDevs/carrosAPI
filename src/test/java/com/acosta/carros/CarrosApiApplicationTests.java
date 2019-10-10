@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.Test;
@@ -25,7 +26,7 @@ public class CarrosApiApplicationTests {
 	private CarroService service;
 	
 	@Test
-	public void test1() {
+	public void testSave() {
 		Carro carro = new Carro();
 		carro.setNome("Ferrari");
 		carro.setTipo("esportivos");
@@ -56,7 +57,27 @@ public class CarrosApiApplicationTests {
 	}
 
 	@Test
-	public void contextLoads() {
+	public void testLista() {
+		
+		List<CarroDTO> carros = service.getCarros();
+		
+		assertEquals(28, carros.size());
 	}
+	
+	@Test
+	public void testGet() {
+		
+		Optional<CarroDTO> op = service.getCarroById(1L);
+		
+		assertTrue(op.isPresent());
+		
+		CarroDTO c = op.get();
+		
+		assertEquals("Tucker 1948", c.getNome());
+		
+		
+	}
+	
+	
 
 }
